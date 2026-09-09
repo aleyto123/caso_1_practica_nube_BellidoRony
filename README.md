@@ -11,16 +11,15 @@ La aplicación utiliza la librería `yt-dlp`, que permite extraer y descargar co
 
 ## Funcionalidad principal
 
-- Ingreso de una URL de video por consola.
-- Validación de entrada para evitar URLs vacías.
-- Descarga del contenido en una carpeta llamada `descargas/`.
+- Interfaz web Flask para introducir la URL del video.
+- Mensajes flash de éxito o error durante la descarga.
+- Descarga del contenido en `/app/descargas`.
 - Soporte para redes sociales como:
   - YouTube
   - Instagram
   - TikTok
   - Facebook
   - LinkedIn
-- Bucle de múltiples descargas hasta que el usuario decida salir.
 
 ## Requisitos
 
@@ -77,7 +76,7 @@ sudo apt install ffmpeg
 python app.py
 ```
 
-6. Cuando se te solicite, ingresa la URL del video y confirma si deseas continuar descargando más videos.
+6. Abre `http://localhost:5000` en el navegador e introduce la URL del video.
 
 ## Estructura del proyecto
 
@@ -103,11 +102,21 @@ docker build -f Dockerfile.multistage -t video-downloader .
 
 ### Ejecutar el contenedor
 
-```bash
-docker run -it --rm video-downloader
+En PowerShell, crea la carpeta local, publica el puerto web y monta el volumen de descargas:
+
+```powershell
+New-Item -ItemType Directory -Force .\descargas | Out-Null
+docker run --rm -p 5000:5000 -v "${PWD}\descargas:/app/descargas" video-downloader
 ```
 
-El contenedor ya incluye `ffmpeg` y prepara el entorno para ejecutar la aplicación.
+En CMD:
+
+```cmd
+if not exist descargas mkdir descargas
+docker run --rm -p 5000:5000 -v "%cd%\descargas:/app/descargas" video-downloader
+```
+
+Después, abre `http://localhost:5000` y utiliza el formulario web. El contenedor ya incluye `ffmpeg` y prepara `/app/descargas` para almacenar los archivos descargados.
 
 ## Notas importantes
 

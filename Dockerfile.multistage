@@ -25,6 +25,9 @@ RUN apt-get update && \
 
 COPY --from=builder /root/.local /root/.local
 COPY app.py ./
-COPY descargas ./descargas
+
+RUN mkdir -p /app/descargas
+
+EXPOSE 5000
 
 CMD ["python", "app.py"]
