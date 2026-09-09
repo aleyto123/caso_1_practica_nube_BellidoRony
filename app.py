@@ -43,9 +43,28 @@ def descargar_video(url):
 
 
 if __name__ == "__main__":
-    video_url = input("Ingresa la URL del video: ")
-    resultado = descargar_video(video_url)
-    if resultado:
-        print(f"Video guardado en: {resultado}")
-    else:
-        print("La descarga no pudo completarse.")
+    print("Descargador de videos")
+    print("Soporta YouTube, Instagram, TikTok, Facebook y LinkedIn.")
+    print("Escribe 'salir' en cualquier momento para terminar.\n")
+
+    while True:
+        video_url = input("Ingresa la URL del video: ").strip()
+
+        if not video_url:
+            print("La URL no puede estar vacía. Inténtalo de nuevo.")
+            continue
+
+        if video_url.lower() in {"salir", "exit", "quit", "q"}:
+            print("Saliendo del programa...")
+            break
+
+        resultado = descargar_video(video_url)
+        if resultado:
+            print(f"Video guardado en: {resultado}")
+        else:
+            print("La descarga no pudo completarse. Verifica la URL o tu conexión.")
+
+        continuar = input("¿Deseas descargar otro video? (s/n): ").strip().lower()
+        if continuar not in {"s", "si", "yes", "y"}:
+            print("Saliendo del programa...")
+            break
