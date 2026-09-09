@@ -20,6 +20,7 @@ def descargar_video(url):
         os.makedirs(OUTPUT_DIR, exist_ok=True)
 
         ydl_opts = {
+            "format": "best[ext=mp4]/best",
             "outtmpl": os.path.join(OUTPUT_DIR, "%(title)s.%(ext)s"),
             "noplaylist": True,
             "quiet": True,
